@@ -75,18 +75,25 @@
 // }
 impl Solution {
     pub fn add_two_numbers(l1: Option<Box<ListNode>>, l2: Option<Box<ListNode>>) -> Option<Box<ListNode>>{
-        let mut prev1 = Some(Box::new(ListNode{ val: 0, next: l1 }));
-        let mut prev2 = Some(Box::new(ListNode{ val: 0, next: l2 }));
-        loop {
-            let mut node1 = prev1.as_mut().unwrap();
-            let mut node2 = prev2.as_mut().unwrap();
-            let (val,carry) = add(node1.val, node2.val, 0);
+        let mut node1 = l1.unwrap();
+        let mut node2 = l2.unwrap();
+        let mut carry = 0;
+        let mut prev = l1;
+        while node1.next.unwrap().is_some() && node2.next.unwrap().is_some() {
+            let (val,carry) = add(node1.val, node2.val, carry);
             node1.val = val;
-            if node1.next.is_None() || node2.next.is_None() {
-                
-            }
+            node1 = node1.next.unwrap();
+            node2 = node2.next.unwrap();
         }
-        return prev1;
+        if node1.next.unwrap().is_some() {
+            node1.val += carry;
+            return prev;
+        }
+        if node2.next.unwrap().is_some() {
+            node2.val += carry;
+            return prev;
+        }
+        prev
     }
 }
 
@@ -95,4 +102,3 @@ pub fn add(num1: i32, num2: i32, carry: i32) -> (i32, i32) {
     return (sum % 10, sum / 10);
 }
 // @lc code=end
-
