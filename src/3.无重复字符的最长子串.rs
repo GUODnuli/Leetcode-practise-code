@@ -63,9 +63,8 @@ impl Solution {
 
         for (i, c) in s.char_indices() {
             max_len += 1;
-            if map.contains_key(&c) {
-                map
-                map.insert(c, max_len)
+            if let Some(&value) = map.get(&c) {
+                
             } else {
                 map.insert(c, max_len);
             }
