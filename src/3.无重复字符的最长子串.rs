@@ -56,21 +56,36 @@
 // @lc code=start
 use crate::solution::Solution;
 use std::collections::HashMap;
+use std::collections::VecDeque;
 impl Solution {
     pub fn length_of_longest_substring(s: String) -> i32 {
         let mut map: HashMap<char, usize> = HashMap::new();
-        let mut max_len: usize = 0;
+        let mut queue = VecDeque::new();
+        let mut max_len = 0usize;
 
         for (i, c) in s.char_indices() {
-            max_len += 1;
-            if let Some(&value) = map.get(&c) {
-                
+            if let Some(_value) = map.get(&c) {
+                loop {
+                    if let Some(element) = queue.pop_front() {
+                        map.remove(&element);
+                        if element == c { break; }
+                    };
+                }
+                max_len = update_len(&mut queue, &mut map, c, i, max_len);
             } else {
-                map.insert(c, max_len);
+                max_len = update_len(&mut queue, &mut map, c, i, max_len);
             }
         }
         max_len as i32
     }
 }
-// @lc code=end
 
+pub fn update_len(queue: &mut VecDeque<char>, map: &mut HashMap<char, usize>, c: char, i: usize, max_len: usize) -> usize {
+    queue.push_back(c);
+    map.insert(c, i);
+    if queue.len() > max_len {
+        return queue.len();
+    }
+    max_len
+}
+// @lc code=end
