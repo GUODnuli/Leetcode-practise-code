@@ -58,6 +58,7 @@
 
 // @lc code=start
 // Definition for singly-linked list.
+
 use crate::solution::Solution;
 
 #[derive(PartialEq, Eq, Clone, Debug)]
