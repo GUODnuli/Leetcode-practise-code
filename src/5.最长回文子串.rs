@@ -46,8 +46,7 @@
  */
 
 // @lc code=start
-// use crate::solution::Solution;
-use std::collections::VecDeque;
+use crate::solution::Solution;
 
 impl Solution {
     pub fn longest_palindrome(s: String) -> String {
@@ -63,7 +62,12 @@ impl Solution {
         for r in 1..len {
             for l in 0..r {
                 if s[l] == s[r] && (r - l <= 2 || dp[l + 1][r - 1]) {
-                    dp[]
+                    dp[l][r] = true;
+                }
+
+                if dp[l][r] && r + 1 - l > max_len {
+                    max_len = r + 1 - l;
+                    start = l;
                 }
             }
         }
