@@ -59,12 +59,59 @@
  */
 
 // @lc code=start
-use crate::solution::Solution;
+// use crate::solution::Solution;
 
 impl Solution {
     pub fn reverse(x: i32) -> i32 {
-        
+        if x == 0 { return x };
+
+        let (max_i32, min_i32) = (vec![2, 1, 4, 7, 4, 8, 3, 6, 4, 7], vec![2, 1, 4, 7, 4, 8, 3, 6, 4, 8]);
+        let mut x = x;
+        let mut ans:Vec<i32> = Vec::new();
+        let mut negative = false;
+
+        if x < 0 {
+            negative = true;
+            x = -x;
+        };
+
+        while x != 0 {
+            let tmp = x % 10;
+            x = x / 10;
+            ans.push(tmp);
+        }
+
+        print!("{:?}", ans);
+
+        match ans.len() {
+            10 => {
+                if ans[9] > 2 { return 0; };
+                if negative {
+                    for i in 9..=0 {
+                        if ans[i] > max_i32[i] {
+                            return 0;
+                        }
+                    }
+                } else {
+                    for i in 9..=0 {
+                        if ans[i] > min_i32[i] {
+                            return 0;
+                        }
+                    }
+                }
+            },
+            _ => {}
+        }
+
+        for i in 0..ans.len() {
+            x += ans[i] * i32::pow(10, (ans.len() - 1 - i) as u32);
+        }
+
+        if negative {
+            x = -x;
+        }
+
+        x
     }
 }
 // @lc code=end
-
