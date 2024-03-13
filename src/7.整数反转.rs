@@ -59,7 +59,7 @@
  */
 
 // @lc code=start
-// use crate::solution::Solution;
+use crate::solution::Solution;
 
 impl Solution {
     pub fn reverse(x: i32) -> i32 {
@@ -71,6 +71,7 @@ impl Solution {
         let mut negative = false;
 
         if x < 0 {
+            if x == std::i32::MIN { return 0 };
             negative = true;
             x = -x;
         };
@@ -81,21 +82,23 @@ impl Solution {
             ans.push(tmp);
         }
 
-        print!("{:?}", ans);
-
         match ans.len() {
             10 => {
-                if ans[9] > 2 { return 0; };
-                if negative {
-                    for i in 9..=0 {
+                if ans[0] > 2 { return 0; };
+                if !negative {
+                    for i in 0..=9 {
                         if ans[i] > max_i32[i] {
                             return 0;
+                        } else if ans[i] < max_i32[i] {
+                            break;
                         }
                     }
                 } else {
-                    for i in 9..=0 {
+                    for i in 0..=9 {
                         if ans[i] > min_i32[i] {
                             return 0;
+                        } else if ans[i] < min_i32[i] {
+                            break;
                         }
                     }
                 }
