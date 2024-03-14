@@ -8,3 +8,4 @@ pub mod zigzag_conversion;
 pub mod reverse_integer;
 pub mod string_to_integer;
 pub mod palindrome_number;
+pub mod regular_expression_matching;
