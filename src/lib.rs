@@ -9,3 +9,4 @@ pub mod reverse_integer;
 pub mod string_to_integer;
 pub mod palindrome_number;
 pub mod regular_expression_matching;
+pub mod container_with_most_water;
