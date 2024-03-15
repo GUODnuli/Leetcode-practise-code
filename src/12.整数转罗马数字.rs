@@ -85,91 +85,21 @@
  */
 
 // @lc code=start
-use crate::solution::Solution;
+// use crate::solution::Solution;
 
 impl Solution {
-    pub fn int_to_roman(num: i32) -> String {
-        let mut num = num;
-        let roman = vec!['I', 'V', 'X', 'L', 'C', 'D', 'M'];
-        let mut ans = String::new();
+    pub fn int_to_roman(mut num: i32) -> String {
+        let values: Vec<i32> = vec![1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1];
+        let symbols: Vec<&str> = vec!["M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"];
 
-        while num != 0 {
-            match num {
-                1000..=3999 => {
-                    let times = num / 1000;
-                    num = num % 1000;
-                    for _ in 0..times {
-                        ans.push(roman[6]);
-                    }
-                },
-                900..=999 => {
-                    num -= 900;
-                    ans.push(roman[4]);
-                    ans.push(roman[6]);
-                },
-                500..=899 => {
-                    num -= 500;
-                    ans.push(roman[5]);
-                },
-                400..=499 => {
-                    num -= 400;
-                    ans.push(roman[4]);
-                    ans.push(roman[5]);
-                },
-                100..=399 => {
-                    let times = num / 100;
-                    num = num % 100;
-                    for _ in 0..times {
-                        ans.push(roman[4]);
-                    }
-                },
-                90..=99 => {
-                    num -= 90;
-                    ans.push(roman[2]);
-                    ans.push(roman[4]);
-                },
-                50..=89 => {
-                    num -= 50;
-                    ans.push(roman[3]);
-                },
-                40..=49 => {
-                    num -= 40;
-                    ans.push(roman[2]);
-                    ans.push(roman[3]);
-                },
-                10..=39 => {
-                    let times = num / 10;
-                    num = num % 10;
-                    for _ in 0..times {
-                        ans.push(roman[2]);
-                    }
-                },
-                9 => {
-                    num -= 9;
-                    ans.push(roman[0]);
-                    ans.push(roman[2]);
-                },
-                5..=8 => {
-                    num -= 5;
-                    ans.push(roman[1]);
-                },
-                4 => {
-                    num -= 4;
-                    ans.push(roman[0]);
-                    ans.push(roman[1]);
-                },
-                1..=3 => {
-                    let times = num;
-                    num = 0;
-                    for _ in 0..times {
-                        ans.push(roman[0]);
-                    }
-                },
-                _ => {}
+        let mut result = String::new();
+        for (value, symbol) in values.iter().zip(symbols.iter()) {
+            while num >= *value {
+                num -= value;
+                result.push_str(symbol);
             }
         }
-
-        ans
+        result
     }
 }
 // @lc code=end
