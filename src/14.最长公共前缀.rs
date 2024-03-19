@@ -50,7 +50,19 @@ use crate::solution::Solution;
 
 impl Solution {
     pub fn longest_common_prefix(strs: Vec<String>) -> String {
-        
+        let mut input: Vec<Vec<char>> = Vec::new();
+        for i in strs.clone() {
+            input.push(i.chars().collect());
+        }
+
+        let mut ans = String::new();
+        let mut index = 0;
+        let mut str_index = 0;
+        loop {
+            loop {
+                
+            }
+        }
         
         strs[0].clone()
     }

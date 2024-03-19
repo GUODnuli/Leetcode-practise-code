@@ -94,93 +94,25 @@ use crate::solution::Solution;
 
 impl Solution {
     pub fn roman_to_int(s: String) -> i32 {
-        let values = vec![1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1];
-        // let roman = vec!["M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"];
+        let mut prev = 0;
         let mut ans = 0;
-        let mut chars = s.chars().peekable();
-
-        while let Some(c) = chars.next() {
-            match c {
-                'M' => {
-                    ans += values[0];
-                },
-                'D' => {
-                    ans += values[2];
-                },
-                'L' => {
-                    ans += values[6];
-                },
-                'V' => {
-                    ans += values[10];
-                },
-                'C' => {
-                    if let Some(&x) = chars.peek() {
-                        match x {
-                            'M' => {
-                                ans += values[1];
-                                chars.next();
-                            },
-                            'D' => {
-                                ans += values[3];
-                                chars.next();
-                            },
-                            'C' => {
-                                ans += values[4];
-                            },
-                            _ => {
-                                ans += values[4];
-                            }
-                        }
-                    } else {
-                        ans += values[4];
-                    }
-                },
-                'X' => {
-                    if let Some(&x) = chars.peek() {
-                        match x {
-                            'C' => {
-                                ans += values[5];
-                                chars.next();
-                            },
-                            'L' => {
-                                ans += values[7];
-                                chars.next();
-                            },
-                            'x' => {
-                                ans += values[8];
-                            },
-                            _ => {
-                                ans += values[8];
-                            }
-                        }
-                    } else {
-                        ans += values[8];
-                    }
-                },
-                'I' => {
-                    if let Some(&x) = chars.peek() {
-                        match x {
-                            'X' => {
-                                ans += values[9];
-                                chars.next();
-                            },
-                            'V' => {
-                                ans += values[11];
-                                chars.next();
-                            },
-                            'I' => {
-                                ans += values[12];
-                            },
-                            _ => {
-                                ans += values[12];
-                            }
-                        }
-                    } else {
-                        ans += values[12];
-                    }
-                },
-                _ => {}
+        for c in s.chars().rev() {
+            let curr = match c {
+                'I' => 1,
+                'V' => 5,
+                'X' => 10,
+                'L' => 50,
+                'C' => 100,
+                'D' => 500,
+                'M' => 1000,
+                _ => 0,
+            };
+            if curr < prev {
+                ans -= curr;
+            } else {
+                ans += curr;
             }
+            prev = curr;
         }
 
         ans
