@@ -47,24 +47,30 @@
 
 // @lc code=start
 use crate::solution::Solution;
+use std::cmp::min;
 
 impl Solution {
     pub fn longest_common_prefix(strs: Vec<String>) -> String {
         let mut input: Vec<Vec<char>> = Vec::new();
+        let mut min_len = 201;
+        let mut ans = Vec::new();
+
         for i in strs.clone() {
+            min_len = min(min_len, i.len());
             input.push(i.chars().collect());
         }
 
-        let mut ans = String::new();
-        let mut index = 0;
-        let mut str_index = 0;
-        loop {
-            loop {
-                
+        'outer: for i in 0..min_len {
+            ans.push(input[0][i]);
+            for j in 0..input.len() {
+                if input[j][i] != ans[i] {
+                    ans.pop();
+                    break 'outer;
+                }
             }
         }
         
-        strs[0].clone()
+        ans.into_iter().collect()
     }
 }
 // @lc code=end
