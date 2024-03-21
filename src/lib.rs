@@ -13,3 +13,4 @@ pub mod container_with_most_water;
 pub mod roman_to_integer;
 pub mod integer_to_roman;
 pub mod longest_common_prefix;
+pub mod three_sum;
