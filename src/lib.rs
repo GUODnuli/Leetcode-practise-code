@@ -15,3 +15,5 @@ pub mod integer_to_roman;
 pub mod longest_common_prefix;
 pub mod three_sum;
 pub mod three_sum_closest;
+pub mod letter_combinations_of_a_phone_number;
+pub mod four_sum;
