@@ -49,7 +49,7 @@
  */
 
 // @lc code=start
-// use crate::solution::Solution;
+use crate::solution::Solution;
 
 impl Solution {
     pub fn three_sum_closest(nums: Vec<i32>, target: i32) -> i32 {
@@ -65,7 +65,6 @@ impl Solution {
                     break 'first_loop;
                 }
                 let sum = nums[i] + nums[j] + nums[k];
-                // print!("sum: {}, nums[i]: {}, nums[j]: {}, nums[k]: {}\n", sum, nums[i], nums[j], nums[k]);
                 if (sum - target).abs() < (result - target).abs() {
                     result = sum;
                 }
