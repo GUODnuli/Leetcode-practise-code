@@ -65,27 +65,34 @@
  */
 
 // @lc code=start
-use crate::solution::Solution;
-use std::collections::HashMap;
+// use crate::solution::Solution;
+use std::collections::HashSet;
 
 impl Solution {
     pub fn three_sum(nums: Vec<i32>) -> Vec<Vec<i32>> {
-        let mut ans: Vec<Vec<i32>> = Vec::new();
-        let mut map: HashMap<>
-        
+        let mut nums = nums;
+        nums.sort();
+        let mut results = HashSet::new();
         for i in 0..nums.len() {
-            for j in i..nums.len() {
-                for k in j..nums.len() {
-                    if nums[i] + nums[j] + nums[k] == 0 && i != j && j != k && i != k {
-                        ans.push(vec![nums[i], nums[k], nums[j]]);
-                    }
+            if i > 0 && nums[i] == nums[i - 1] {
+                continue;
+            }
+            let mut j = i + 1;
+            let mut k = nums.len() - 1;
+            while j < k {
+                let sum = nums[i] + nums[j] + nums[k];
+                if sum == 0 {
+                    results.insert(vec![nums[i], nums[j], nums[k]]);
+                    j += 1;
+                    k -= 1;
+                } else if sum < 0 {
+                    j += 1;
+                } else {
+                    k -= 1;
                 }
             }
         }
-
-        print!("{:?}", ans);
-        ans
+        results.into_iter().collect()
     }
 }
 // @lc code=end
-
