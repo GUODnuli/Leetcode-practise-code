@@ -67,7 +67,13 @@ impl Solution {
         nums.sort();
         let mut map = HashMap::new();
         for i in 0..len {
+            if i > 0 && nums[i] == nums[i - 1] {
+                continue;
+            }
             for j in i + 1..len {
+                if j > i + 1 && nums[j] == nums[j - 1] {
+                    continue;
+                }
                 let sum = nums[i] + nums[j];
                 map.entry(sum).or_insert(Vec::new()).push((i, j));
             }
@@ -87,7 +93,17 @@ impl Solution {
                 }
             }
         }
-        for item in set {
+
+        'outside: for item in set {
+            let mut sum: i64 = 0;
+            for j in &item {
+                let max = std::i32::MAX as i64;
+                let min = std::i32::MIN as i64;
+                sum += *j as i64;
+                if sum > max || sum < min {
+                    continue 'outside; 
+                }
+            }
             result.push(item);
         }
         result
