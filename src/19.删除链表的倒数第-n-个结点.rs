@@ -76,14 +76,21 @@ use crate::solution::Solution;
 
 impl Solution {
     pub fn remove_nth_from_end(head: Option<Box<ListNode>>, n: i32) -> Option<Box<ListNode>> {
-        let mut iter = head.as_ref().unwrap();
-        
-        while iter.next != None {
+      if n == 1 {
+        return 
+      }
+      let mut iter = head.as_ref().unwrap();
+      let mut pre_node = Some(Box::new(ListNode{next: head, val: 0}));
+      let index = 1;
+
+      while iter != None {
+        if index == n {
           
         }
+      }
 
-        head
-    }
+      head
+  }
 }
 // @lc code=end
 
