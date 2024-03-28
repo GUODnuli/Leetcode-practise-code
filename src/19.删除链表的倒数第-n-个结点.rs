@@ -77,15 +77,22 @@ use crate::solution::Solution;
 impl Solution {
     pub fn remove_nth_from_end(head: Option<Box<ListNode>>, n: i32) -> Option<Box<ListNode>> {
       if n == 1 {
-        return 
+        return head.unwrap().next;
       }
-      let mut iter = head.as_ref().unwrap();
-      let mut pre_node = Some(Box::new(ListNode{next: head, val: 0}));
-      let index = 1;
+      let mut head = head;
+      let mut iter = head.as_mut();
+      let mut index = 1;
 
-      while iter != None {
-        if index == n {
-          
+      loop {
+        if index == n - 1 {
+          let next_node = iter.as_mut().unwrap().next.take();
+          iter.as_mut().unwrap().next = next_node.unwrap().next;
+          break;
+        }
+        index += 1;
+        iter = iter.unwrap().next.as_mut();
+        if index >= n {
+          break;
         }
       }
 
