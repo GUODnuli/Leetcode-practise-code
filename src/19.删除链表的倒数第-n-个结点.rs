@@ -57,47 +57,29 @@
 
 // @lc code=start
 // Definition for singly-linked list.
-#[derive(PartialEq, Eq, Clone, Debug)]
-pub struct ListNode {
-  pub val: i32,
-  pub next: Option<Box<ListNode>>
-}
+// #[derive(PartialEq, Eq, Clone, Debug)]
+// pub struct ListNode {
+//   pub val: i32,
+//   pub next: Option<Box<ListNode>>
+// }
 
-impl ListNode {
-  #[inline]
-  fn new(val: i32) -> Self {
-    ListNode {
-      next: None,
-      val
-    }
-  }
-}
-use crate::solution::Solution;
+// impl ListNode {
+//   #[inline]
+//   fn new(val: i32) -> Self {
+//     ListNode {
+//       next: None,
+//       val
+//     }
+//   }
+// }
+// use crate::solution::Solution;
 
 impl Solution {
     pub fn remove_nth_from_end(head: Option<Box<ListNode>>, n: i32) -> Option<Box<ListNode>> {
-      if n == 1 {
-        return head.unwrap().next;
-      }
-      let mut head = head;
-      let mut iter = head.as_mut();
-      let mut index = 1;
+      let mut dummy = Some(Box::new(ListNode{ val: 0, next: head }));
+      let mut slow_p = &mut dummy;
+      let mut fast_p = 
 
-      loop {
-        if index == n - 1 {
-          let next_node = iter.as_mut().unwrap().next.take();
-          iter.as_mut().unwrap().next = next_node.unwrap().next;
-          break;
-        }
-        index += 1;
-        iter = iter.unwrap().next.as_mut();
-        if index >= n {
-          break;
-        }
-      }
-
-      head
-  }
+    }
 }
 // @lc code=end
-
