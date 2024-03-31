@@ -20,3 +20,5 @@ pub mod four_sum;
 pub mod remove_nth_node_from_end_of_list;
 pub mod valid_parentheses;
 pub mod merge_two_sorted_lists;
+pub mod generate_parentheses;
+pub mod merge_k_sorted_lists;
