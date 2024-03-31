@@ -60,7 +60,7 @@ pub struct ListNode {
 
 impl ListNode {
   #[inline]
-  fn new(val: i32) -> Self {
+  fn _new(val: i32) -> Self {
     ListNode {
       next: None,
       val
@@ -78,9 +78,44 @@ impl Solution {
         if list2.is_none() {
             return list1;
         }
-        let mut dummy = Some(Box::new(ListNode{ val: 0, next: list1 }));
-        let mut ptr1 = &mut dummy;
-        let mut ptr2 = list2;
+
+        let mut dummy = Some(Box::new(ListNode{ val: 0, next: None }));
+        let (mut ptr1, mut ptr2): (&mut Option<Box<ListNode>>, Option<Box<ListNode>>) = (&mut None, None);
+
+        let (a, b) = (list1.as_ref().unwrap().val, list2.as_ref().unwrap().val);
+        if a <= b {
+          dummy.as_mut().unwrap().next = list1;
+          ptr1 = &mut dummy.as_mut().unwrap().next;
+          ptr2 = list2;
+        } else {
+          dummy.as_mut().unwrap().next = list2;
+          ptr1 = &mut dummy.as_mut().unwrap().next;
+          ptr2 = list1;
+        }
+
+        while ptr1.as_ref().unwrap().next.is_some() && ptr2.as_ref().is_some() {
+          let (ptr1_val, ptr2_val) = (ptr1.as_ref().unwrap().val, ptr2.as_ref().unwrap().val);
+          if ptr1_val < ptr2_val
+            && ptr1.as_ref().unwrap().next.as_ref().unwrap().val <= ptr2_val {
+            ptr1 = &mut ptr1.as_mut().unwrap().next;
+          } else {
+            let mut ptr1_next_node = &mut ptr1.clone();
+            let mut ptr2_next_node = &mut ptr2.clone();
+
+            ptr1_next_node = &mut ptr1_next_node.as_mut().unwrap().next;
+            ptr2_next_node = &mut ptr2_next_node.as_mut().unwrap().next;
+
+            ptr1.as_mut().unwrap().next = ptr2.take();
+            ptr1 = &mut ptr1.as_mut().unwrap().next;
+            ptr1.as_mut().unwrap().next = ptr1_next_node.take();
+
+            ptr2 = ptr2_next_node.take();
+          }
+        }
+
+        if ptr2.as_ref().is_some() {
+          ptr1.as_mut().unwrap().next = ptr2.take();
+        }
 
         dummy.unwrap().next
     }
