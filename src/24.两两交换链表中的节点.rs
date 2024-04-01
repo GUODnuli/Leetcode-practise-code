@@ -76,8 +76,24 @@ impl Solution {
 
         let mut dummy = Some(Box::new(ListNode::new(0)));
         dummy.as_mut().unwrap().next = head;
-        let mut ptr1 = dummy.as_mut().unwrap().next;
-        let mut ptr2 = ptr1.as_mut().unwrap().next;
+        let mut pre_node = &mut dummy.as_mut();
+        let mut ptr1 = &mut dummy.as_mut().unwrap().next;
+        let mut ptr2 = &mut ptr1.clone().unwrap().next;
+
+        // {
+        //   ptr1 = &mut dummy.as_mut().unwrap().next;
+        //   ptr2 = ptr1.clone().unwrap().next;
+        // }
+
+        while ptr1.as_ref().is_some() && ptr2.as_ref().is_some() {
+          let mut next_node = ptr2.clone().unwrap().next;
+          ptr1.as_mut().unwrap().next = next_node;
+          ptr2.as_mut().unwrap().next = ptr1.take();
+          pre_node.as_mut().unwrap().next = ptr2.take();
+
+        }
+
+        dummy.unwrap().next
     }
 }
 // @lc code=end
