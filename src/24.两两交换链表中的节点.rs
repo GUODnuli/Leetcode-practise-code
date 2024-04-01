@@ -74,26 +74,22 @@ impl Solution {
             return head;
         }
 
-        let mut dummy = Some(Box::new(ListNode::new(0)));
-        dummy.as_mut().unwrap().next = head;
-        let mut pre_node = &mut dummy.as_mut();
-        let mut ptr1 = &mut dummy.as_mut().unwrap().next;
-        let mut ptr2 = &mut ptr1.clone().unwrap().next;
-
-        // {
-        //   ptr1 = &mut dummy.as_mut().unwrap().next;
-        //   ptr2 = ptr1.clone().unwrap().next;
-        // }
-
-        while ptr1.as_ref().is_some() && ptr2.as_ref().is_some() {
-          let mut next_node = ptr2.clone().unwrap().next;
-          ptr1.as_mut().unwrap().next = next_node;
-          ptr2.as_mut().unwrap().next = ptr1.take();
-          pre_node.as_mut().unwrap().next = ptr2.take();
-
+        let mut remain = head;
+        let mut result = ListNode::new(0);
+        let mut tail = &mut result;
+        while let Some(mut n1) = remain {
+          remain = n1.next.take();
+          if let Some(mut n2) = remain {
+            remain = n2.next.take();
+            n2.next = Some(n1);
+            tail.next = Some(n2);
+            tail = tail.next.as_mut().unwrap().next.as_mut().unwrap();
+          } else {
+            tail.next = Some(n1);
+            tail = tail.next.as_mut().unwrap();
+          }
         }
-
-        dummy.unwrap().next
+        result.next
     }
 }
 // @lc code=end
