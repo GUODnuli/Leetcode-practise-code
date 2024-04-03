@@ -76,8 +76,35 @@ use crate::solution::Solution;
 
 impl Solution {
     pub fn reverse_k_group(head: Option<Box<ListNode>>, k: i32) -> Option<Box<ListNode>> {
-        let mut remain = ListNode::new(0);
-        remain = 
+        let mut remain = head;
+        let mut result = ListNode::new(0);
+        let mut tail = &mut result;
+        let mut node_vec = Vec::new();
+
+        'first_loop: while let Some(mut curr_node) = remain {
+            let mut index = k - 1;
+            remain = curr_node.next.take();
+            node_vec.push(curr_node);
+            while index != 0 {
+                if let Some(mut curr_node) = remain {
+                    index -= 1;
+                    remain = curr_node.next.take();
+                    node_vec.push(curr_node);
+                } else {
+                    for i in node_vec.into_iter() {
+                        tail.next = Some(i);
+                        tail = tail.next.as_mut().unwrap();
+                    }
+                    break 'first_loop;
+                }
+            }
+            while node_vec.len() != 0 {
+                tail.next = node_vec.pop();
+                tail = tail.next.as_mut().unwrap();
+            }
+        }
+
+        result.next
     }
 }
 // @lc code=end
