@@ -26,3 +26,4 @@ pub mod swap_nodes_in_pairs;
 pub mod reverse_nodes_in_k_group;
 pub mod remove_duplicates_from_sorted_array;
 pub mod remove_element;
+pub mod find_the_index_of_the_first_occurrence_in_a_string;
