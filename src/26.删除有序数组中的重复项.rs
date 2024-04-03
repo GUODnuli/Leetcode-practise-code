@@ -73,15 +73,17 @@
  */
 
 // @lc code=start
-use crate::solution::Solution;
+// use crate::solution::Solution;
 
 impl Solution {
     pub fn remove_duplicates(nums: &mut Vec<i32>) -> i32 {
         let mut index = 0;
-        for i in 0..nums.len() {
-            if nums[i] > nums[index] {
-                nums[index + 1] = nums[i];
+        for i in 1..nums.len() {
+            if nums[i] != nums[index] {
                 index += 1;
+                if index != i {
+                    nums[index] = nums[i];
+                }
             }
         }
         index as i32 + 1
