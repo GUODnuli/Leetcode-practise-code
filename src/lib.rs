@@ -23,3 +23,4 @@ pub mod merge_two_sorted_lists;
 pub mod generate_parentheses;
 pub mod merge_k_sorted_lists;
 pub mod swap_nodes_in_pairs;
+pub mod reverse_nodes_in_k_group;
