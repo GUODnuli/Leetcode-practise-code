@@ -25,3 +25,4 @@ pub mod merge_k_sorted_lists;
 pub mod swap_nodes_in_pairs;
 pub mod reverse_nodes_in_k_group;
 pub mod remove_duplicates_from_sorted_array;
+pub mod remove_element;
