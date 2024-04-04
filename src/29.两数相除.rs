@@ -54,53 +54,35 @@ use crate::solution::Solution;
 
 impl Solution {
     pub fn divide(dividend: i32, divisor: i32) -> i32 {
-        if divisor == 1 {
-            return dividend;
+        let mut dividend = dividend;
+        let mut divisor = divisor;
+        let mut result = 0;
+        let sign = if (dividend > 0) ^ (divisor > 0) { -1 } else { 1 };
+
+        dividend = if dividend > 0 { -dividend } else { dividend };
+        divisor = if divisor > 0 { -divisor } else { divisor };
+
+        while dividend <= divisor {
+            let mut temp_result = -1;
+            let mut temp_divisor = divisor;
+            while dividend <= (temp_divisor << 1) {
+                if temp_divisor <= (std::i32::MIN >> 1) { break; }
+                temp_result = temp_result << 1;
+                temp_divisor = temp_divisor << 1;
+            }
+            dividend = dividend - temp_divisor;
+            result += temp_result;
         }
-        if divisor == -1 {
-            if dividend == std::i32::MIN {
+
+        if result == std::i32::MIN {
+            if sign == 1 {
                 return std::i32::MAX;
             } else {
-                return -dividend;
-            }
-        }
-        if dividend == 0 {
-            return 0;
-        }
-
-        let mut result = 0;
-        let (mut dividend, mut divisor) = (dividend, divisor);
-        let opposite = dividend ^ divisor < 0;
-
-        if dividend == std::i32::MIN || divisor == std::i32::MIN {
-            if opposite && dividend == std::i32::MIN {
-                divisor = -divisor;
-            }
-            if opposite && divisor == std::i32::MIN {
-                dividend = -dividend;
-            }
-        } else if opposite {
-            (dividend, divisor) = (dividend.abs(), divisor.abs());
-        }
-
-        if dividend > 0 {
-            while dividend >= divisor {
-                dividend -= divisor;
-                result += 1;
+                return std::i32::MIN;
             }
         } else {
-            while dividend <= divisor {
-                dividend -= divisor;
-                result += 1;
-            }
+            return -sign * result;
         }
-        
-
-        if opposite {
-            return -result;
-        }
-
-        result
     }
 }
 // @lc code=end
