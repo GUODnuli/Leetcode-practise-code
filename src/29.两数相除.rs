@@ -50,6 +50,8 @@
  */
 
 // @lc code=start
+use crate::solution::Solution;
+
 impl Solution {
     pub fn divide(dividend: i32, divisor: i32) -> i32 {
         if divisor == 1 {
@@ -62,29 +64,37 @@ impl Solution {
                 return -dividend;
             }
         }
+        if dividend == 0 {
+            return 0;
+        }
 
         let mut result = 0;
         let (mut dividend, mut divisor) = (dividend, divisor);
         let opposite = dividend ^ divisor < 0;
-        let mut min_remainder = 0;
 
-        if opposite {
-            if dividend == std::i32::MIN {
-                min_remainder = 1;
-                dividend == std::i32::MAX;
-            } else {
-                (dividend, divisor) = (dividend.abs(), divisor.abs());
+        if dividend == std::i32::MIN || divisor == std::i32::MIN {
+            if opposite && dividend == std::i32::MIN {
+                divisor = -divisor;
             }
+            if opposite && divisor == std::i32::MIN {
+                dividend = -dividend;
+            }
+        } else if opposite {
+            (dividend, divisor) = (dividend.abs(), divisor.abs());
         }
 
-        while dividend >= divisor {
-            dividend -= divisor;
-            result += 1;
-            if min_remainder != 0 {
-                dividend += min_remainder;
-                min_remainder = 0;
+        if dividend > 0 {
+            while dividend >= divisor {
+                dividend -= divisor;
+                result += 1;
+            }
+        } else {
+            while dividend <= divisor {
+                dividend -= divisor;
+                result += 1;
             }
         }
+        
 
         if opposite {
             return -result;
