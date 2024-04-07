@@ -28,3 +28,4 @@ pub mod remove_duplicates_from_sorted_array;
 pub mod remove_element;
 pub mod find_the_index_of_the_first_occurrence_in_a_string;
 pub mod divide_two_integers;
+pub mod substring_with_concatenation_of_all_words;

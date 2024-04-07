@@ -71,9 +71,37 @@
  */
 
 // @lc code=start
+// use crate::solution::Solution;
+use std::collections::HashMap;
+
 impl Solution {
     pub fn find_substring(s: String, words: Vec<String>) -> Vec<i32> {
+        let word_count = words.iter().map(|word| (&**word, 0)).collect::<HashMap<_, _>>();
+        let word_count = words.iter().map(|word| (&**word, word_count.get(&**word).unwrap_or(&0) + 1)).collect::<HashMap<_, _>>();
+        let word_len = words[0].len();
+        let all_len = word_len * words.len();
 
+        let mut res = Vec::new();
+
+        for i in 0..=s.len() - all_len {
+            let mut seen = HashMap::new();
+            for j in (i..i + all_len).step_by(word_len) {
+                let piece = &s[j..j + word_len];
+                if word_count.contains_key(piece) {
+                    *seen.entry(piece).or_insert(0) += 1;
+                    if seen[piece] > word_count[piece] {
+                        break;
+                    }
+                } else {
+                    break;
+                }
+            }
+            if seen == word_count {
+                res.push(i as i32);
+            }
+            print!("seen: {:?},word_count: {:?}\n", seen, word_count);
+        }
+        res
     }
 }
 // @lc code=end
