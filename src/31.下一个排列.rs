@@ -67,30 +67,32 @@
  */
 
 // @lc code=start
-// use crate::solution::Solution;
+use crate::solution::Solution;
 
 impl Solution {
     pub fn next_permutation(nums: &mut Vec<i32>) {
         let mut is_lastest = true;
-        for initial_index in 0..nums.len() {
-            let (mut max_num, mut index) = (nums[initial_index], initial_index);
-            let mut is_change = false;
-            for (i, v) in nums.iter().enumerate() {
-                if max_num < *v {
-                    (index, max_num) = (i, *v);
-                    is_change = true;
-                    is_lastest = false;
-                }
-            }
-            if is_change {
-                (nums[index], nums[index - 1]) = (nums[index - 1], nums[index]);
-                return;
+        for i in 1..nums.len() {
+            if nums[i - 1] < nums[i] {
+                is_lastest = false;
             }
         }
         if is_lastest {
-            nums.sort();
+            return nums.sort();
+        }
+
+        for i in (0..nums.len() - 1).rev() {
+            if nums[i + 1] > nums[i] {
+                for j in (i..=nums.len() - 1).rev() {
+                    if nums[j] > nums[i] {
+                        (nums[i], nums[j]) = (nums[j], nums[i]);
+                        break;
+                    }
+                }
+                nums[(i + 1)..].sort();
+                return;
+            }
         }
     }
 }
 // @lc code=end
-
