@@ -57,10 +57,29 @@
 
 // @lc code=start
 use crate::solution::Solution;
+use std::cmp::max;
 
 impl Solution {
     pub fn longest_valid_parentheses(s: String) -> i32 {
+        if s.is_empty() {
+            return 0;
+        }
 
+        let s: Vec<char> = s.chars().collect();
+        let mut max_length = 0;
+        let mut length = 0;
+        let mut left = 0usize;
+
+        for i in s {
+            if left == 0 && i == ')' {
+                max_length = max(max_length, length);
+                length = 0;
+                continue;
+            }
+
+        }
+
+        0
     }
 }
 // @lc code=end
