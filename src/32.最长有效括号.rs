@@ -56,30 +56,34 @@
  */
 
 // @lc code=start
-use crate::solution::Solution;
+// use crate::solution::Solution;
 use std::cmp::max;
 
 impl Solution {
     pub fn longest_valid_parentheses(s: String) -> i32 {
-        if s.is_empty() {
-            return 0;
-        }
+        let mut dp = vec![0; s.len()];
+        let mut max_len = 0;
+        let s = s.chars().collect::<Vec<char>>();
 
-        let s: Vec<char> = s.chars().collect();
-        let mut max_length = 0;
-        let mut length = 0;
-        let mut left = 0usize;
-
-        for i in s {
-            if left == 0 && i == ')' {
-                max_length = max(max_length, length);
-                length = 0;
-                continue;
+        for i in 1..s.len() {
+            if s[i] == ')' {
+                if s[i - 1] == '(' {
+                    if i >= 2 {
+                        dp[i] = dp[i - 2]
+                    } else {
+                        dp[i] = 2;
+                    }
+                } else if i - dp[i - 1] > 0 && s[i - dp[i - 1] - 1] == '(' {
+                    if i - dp[i - 1] >= 2 {
+                        dp[i] = dp[i - dp[i - 1] - 2]
+                    } else {
+                        dp[i] = 2;
+                    }
+                }
+                max_len = max(max_len, dp[i]);
             }
-
         }
-
-        0
+        max_len as i32
     }
 }
 // @lc code=end
