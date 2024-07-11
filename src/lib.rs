@@ -32,3 +32,6 @@ pub mod substring_with_concatenation_of_all_words;
 pub mod next_permutation;
 pub mod longest_valid_parentheses;
 pub mod search_in_rotated_sorted_array;
+pub mod find_first_and_last_position_of_element_in_sorted_array;
+pub mod search_insert_position;
+pub mod valid_sudoku;
