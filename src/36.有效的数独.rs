@@ -67,26 +67,86 @@
  * 因此这个数独是无效的。
  * 
  * 
- * 
+ *
  * 提示：
- * 
- * 
+ *
+ *
  * board.length == 9
  * board[i].length == 9
  * board[i][j] 是一位数字（1-9）或者 '.'
- * 
- * 
+ *
+ *
  */
 
 // @lc code=start
 use crate::solution::Solution;
-use std::collections::HashMap;
+use std::collections::HashSet;
 
 impl Solution {
     pub fn is_valid_sudoku(board: Vec<Vec<char>>) -> bool {
-        
+        let mut check_set: HashSet<u8> = HashSet::new();
+
+        // Iterating over each row.
+        for i in 0..board.len() {
+            for j in 0..board[0].len() {
+                let curr = board[i][j];
+                if curr.is_digit(10){
+                    let num = curr as u8 - '0' as u8;
+                    if !check_set.contains(&num) {
+                        check_set.insert(num);
+                    } else {
+                        return false;
+                    }
+                }
+            }
+            check_set.clear();
+        }
+
+        // Iterating over each col.
+        for i in 0..board.len() {
+            for j in 0..board[0].len() {
+                let curr = board[j][i];
+                if curr.is_digit(10){
+                    let num = curr as u8 - '0' as u8;
+                    if !check_set.contains(&num) {
+                        check_set.insert(num);
+                    } else {
+                        return false;
+                    }
+                }
+            }
+            check_set.clear();
+        }
+
+        // Iterating over each Nine-Box Grid.
+        for box_row in 0..3 {
+            for box_col in 0..3 {
+                if !check_subgrid(board.as_ref(), box_row * 3, box_col * 3) {
+                    return false;
+                }
+            }
+        }
+
         true
     }
+
+}
+
+pub fn check_subgrid(board: &Vec<Vec<char>>, start_row: usize, start_col: usize) -> bool {
+    let mut check_set: HashSet<u8> = HashSet::new();
+    for i in 0..3 {
+        for j in 0..3 {
+            let curr = board[start_row + i][start_col + j];
+            if curr.is_digit(10) {
+                let num = curr as u8 - '0' as u8;
+                if !check_set.contains(&num) {
+                    check_set.insert(num);
+                } else {
+                    return false;
+                }
+            }
+        }
+    }
+    true
 }
 // @lc code=end
-

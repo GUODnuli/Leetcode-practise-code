@@ -35,3 +35,4 @@ pub mod search_in_rotated_sorted_array;
 pub mod find_first_and_last_position_of_element_in_sorted_array;
 pub mod search_insert_position;
 pub mod valid_sudoku;
+pub mod sudoku_solver;
