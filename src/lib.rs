@@ -36,3 +36,7 @@ pub mod find_first_and_last_position_of_element_in_sorted_array;
 pub mod search_insert_position;
 pub mod valid_sudoku;
 pub mod sudoku_solver;
+pub mod count_and_say;
+pub mod combination_sum;
+pub mod combination_sum_ii;
+pub mod first_missing_positive;
